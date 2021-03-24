@@ -21,13 +21,13 @@ checkAndCreate =
     commit conn
     disconnect conn
 
-insert :: String -> IO Integer
-insert entry =
+insert :: Int -> String -> IO Integer
+insert id entry =
     do
     conn <- connectSqlite3 dbFile
 
     stmt <- prepare conn "INSERT INTO test VALUES (?, ?)"
-    result <- execute stmt [toSql (1 :: Int), toSql entry]
+    result <- execute stmt [toSql (id :: Int), toSql entry]
 
     commit conn
     disconnect conn
