@@ -12,7 +12,7 @@ procArgs [] = "No args provided"
 procArgs (x:xs)
   | x == "Add" = "Add requested"
   | x == "List" = "List requested"
-  | otherwise = "Invalid command"
+  | otherwise = "Invalid command: " ++ x
 
 main = do
   args <- getArgs
