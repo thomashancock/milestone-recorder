@@ -7,6 +7,7 @@ module DatabaseLocal (
 import Database.HDBC 
 import Database.HDBC.Sqlite3 (connectSqlite3)
 import Control.Monad (when)
+import Data.Maybe (fromMaybe)
 
 dbFile = "db/test.db"
 
@@ -54,8 +55,6 @@ query maxId =
     where convRow :: [SqlValue] -> String
           convRow [sqlId, sqlDesc] =
               show intid ++ ": " ++ desc
-              where intid = (fromSql sqlId)::Integer
-                    desc = case fromSql sqlDesc of
-                             Just x -> x
-                             Nothing -> "NULL"
+              where intid = fromSql sqlId :: Integer
+                    desc = fromMaybe "NULL" (fromSql sqlDesc)
           convRow x = fail $ "Unexpected result: " ++ show x
