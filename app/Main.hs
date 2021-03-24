@@ -3,10 +3,7 @@ module Main where
 import System.Environment
 import Data.List (unwords)
 
-import DatabaseLocal (query)
-
--- main :: IO ()
--- main = query 2
+import qualified DatabaseLocal as DB
 
 argConcat :: [String] -> String
 argConcat [] = ""
@@ -28,6 +25,15 @@ procArgs (x:xs)
   | otherwise = "Invalid command: " ++ x
 
 main = do
-  args <- getArgs
-  let result = procArgs args
-  putStrLn result
+  DB.checkAndCreate -- Initialise the database
+
+  -- Insert to the DB
+  DB.insert "Test String 2"
+
+  -- Get Results
+  results <- DB.query 10
+  mapM_ putStrLn results
+
+  -- args <- getArgs
+  -- let result = procArgs args
+  -- putStrLn result

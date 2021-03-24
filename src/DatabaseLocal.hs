@@ -1,31 +1,58 @@
 module DatabaseLocal (
+  checkAndCreate,
+  insert,
   query
 ) where
 
 import Database.HDBC 
 import Database.HDBC.Sqlite3 (connectSqlite3)
+import Control.Monad (when)
 
-query :: Int -> IO()
+dbFile = "db/test.db"
+
+checkAndCreate :: IO()
+checkAndCreate =
+    do
+    conn <- connectSqlite3 dbFile
+
+    stmt <- prepare conn "CREATE TABLE IF NOT EXISTS test (id INTEGER NOT NULL, desc VARCHAR(80))"
+    r <- execute stmt []
+
+    commit conn
+    disconnect conn
+
+insert :: String -> IO Integer
+insert entry =
+    do
+    conn <- connectSqlite3 dbFile
+
+    stmt <- prepare conn "INSERT INTO test VALUES (?, ?)"
+    result <- execute stmt [toSql (1 :: Int), toSql entry]
+
+    commit conn
+    disconnect conn
+
+    -- Return the result of the execute function
+    return result
+
+query :: Int -> IO [String]
 query maxId = 
-    do -- Connect to DB
-    conn <- connectSqlite3 "db/test.db"
+    do
+    conn <- connectSqlite3 dbFile
 
-    -- Run query and store in r
     r <- quickQuery' conn
         "SELECT id, desc from test where id <= ? ORDER BY id, desc"
         [toSql maxId]
 
     -- Convert each row into a String
     let stringRows = map convRow r
-                    
-    -- Print the rows out
-    mapM_ putStrLn stringRows
 
-    -- Disconnect from the database
     disconnect conn
 
+    return stringRows
+
     where convRow :: [SqlValue] -> String
-          convRow [sqlId, sqlDesc] = 
+          convRow [sqlId, sqlDesc] =
               show intid ++ ": " ++ desc
               where intid = (fromSql sqlId)::Integer
                     desc = case fromSql sqlDesc of
