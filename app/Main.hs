@@ -9,31 +9,38 @@ argConcat :: [String] -> String
 argConcat [] = ""
 argConcat x = unwords x
 
-add :: [String] -> String
-add [] = "Add requested but no args provided"
-add x = "Add requested with args: " ++ argConcat x
+add :: [String] -> IO String
+add [] = do return"Add requested but no args provided"
+add x = do
+    return ("Add requested with args: " ++ argConcat x)
 
-list :: [String] -> String
-list [] = "List requested but no args provided"
-list x = "List requested with args: " ++ argConcat x
+list :: [String] -> IO String
+list [] = do return "List requested but no args provided"
+list x = do
+    return ("List requested with args: " ++ argConcat x)
 
-procArgs :: [String] -> String
-procArgs [] = "No args provided"
-procArgs (x:xs)
-  | x == "Add" = add xs
-  | x == "List" = list xs
-  | otherwise = "Invalid command: " ++ x
+procArgs :: [String] -> IO String
+procArgs [] = do return "No args provided"
+procArgs (x:xs) = do
+  if x == "Add" then
+    add xs
+  else if x == "List" then
+    list xs
+  else
+    return ("Invalid command: " ++ x)
 
 main = do
-  DB.checkAndCreate -- Initialise the database
+  -- DB.checkAndCreate -- Initialise the database
 
-  -- Insert to the DB
-  DB.insert "Test String 2"
+  -- -- Insert to the DB
+  -- DB.insert 4 "Hello Sam"
+  -- -- DB.insert 2 "Test String 5"
+  -- -- DB.insert 3 "Test String 6"
 
-  -- Get Results
-  results <- DB.query 10
-  mapM_ putStrLn results
+  -- -- Get Results
+  -- results <- DB.query 10
+  -- mapM_ putStrLn results
 
-  -- args <- getArgs
-  -- let result = procArgs args
-  -- putStrLn result
+  args <- getArgs
+  result <- procArgs args
+  putStrLn result
