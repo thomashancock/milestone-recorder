@@ -6,6 +6,12 @@ module DatabaseLocal (
 ) where
 
 import Database.HDBC
+    ( fromSql,
+      toSql,
+      fetchAllRows',
+      SqlValue,
+      Statement(execute),
+      IConnection(disconnect, prepare, commit) )
 import Database.HDBC.Sqlite3 (connectSqlite3)
 import Control.Monad (when)
 import Data.Maybe (fromMaybe)
@@ -13,6 +19,7 @@ import Data.Maybe (fromMaybe)
 import qualified DateLocal
 import qualified SQLQueryMaker as Query
 
+dbFile :: [Char]
 dbFile = "db/test.db"
 
 checkAndCreate :: IO()

@@ -5,7 +5,7 @@ module DateLocal (
   deserialize
 ) where
 
-import Data.List.Split
+import Data.List.Split ( splitOn )
 
 newtype Date = Date (Int, Int, Int) deriving (Eq)
 
