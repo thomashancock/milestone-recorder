@@ -9,6 +9,8 @@ import Database.HDBC.Sqlite3 (connectSqlite3)
 import Control.Monad (when)
 import Data.Maybe (fromMaybe)
 
+import qualified DateLocal
+
 dbFile = "db/test.db"
 
 checkAndCreate :: IO()
@@ -22,10 +24,13 @@ checkAndCreate =
     commit conn
     disconnect conn
 
-insert :: Int -> String -> IO Integer
-insert id entry =
+insert :: DateLocal.Date -> String -> IO Integer
+insert date entry =
     do
     conn <- connectSqlite3 dbFile
+
+    -- Serialize date as SQLite can't store dates
+    let id = DateLocal.serialize date
 
     stmt <- prepare conn "INSERT INTO test VALUES (?, ?)"
     result <- execute stmt [toSql (id :: Int), toSql entry]

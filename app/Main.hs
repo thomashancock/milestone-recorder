@@ -4,6 +4,7 @@ import System.Environment
 import Data.List (unwords)
 
 import qualified DatabaseLocal as DB
+import qualified DateLocal
 
 argConcat :: [String] -> String
 argConcat [] = ""
@@ -13,7 +14,7 @@ add :: [String] -> IO [String]
 add [] = do return ["Add requested but no args provided"]
 add (x:xs) = do
     let restStr = argConcat xs
-    DB.insert (read x) restStr
+    DB.insert (DateLocal.fromStr x) restStr
     return ["Added " ++ x ++ " " ++ restStr]
 
 list :: [String] -> IO [String]
