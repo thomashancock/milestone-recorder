@@ -25,7 +25,7 @@ add (x:xs) = do
       return ["Unable to add " ++ x ++ " " ++ restStr]
 
 list :: [String] -> IO [String]
-list args = DB.query args
+list = DB.query
 
 delete :: [String] -> IO [String]
 delete [] = do return ["Delete requested but no id provided"]
@@ -50,6 +50,7 @@ procArgs (x:xs) = do
   else
     return ["Invalid command: " ++ x]
 
+main :: IO ()
 main = do
   -- Initialise the database
   DB.checkAndCreate 
