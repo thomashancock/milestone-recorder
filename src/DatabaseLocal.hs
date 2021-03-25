@@ -41,8 +41,8 @@ insert date entry =
     -- Return the result of the execute function
     return result
 
-query :: Int -> IO [String]
-query maxId = 
+query :: [String] -> IO [String]
+query _ = 
     do
     conn <- connectSqlite3 dbFile
 

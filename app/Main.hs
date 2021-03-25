@@ -18,7 +18,7 @@ add (x:xs) = do
     return ["Added " ++ x ++ " " ++ restStr]
 
 list :: [String] -> IO [String]
-list _ = DB.query 10
+list args = DB.query args
 
 procArgs :: [String] -> IO [String]
 procArgs [] = do return ["No args provided"]
