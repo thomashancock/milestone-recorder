@@ -1,5 +1,7 @@
 
 import qualified TestDateLocal as TDL
 
-main :: IO ()
-main = TDL.runTest
+import Test.HUnit
+
+main :: IO Counts
+main = runTestTT TDL.tests
