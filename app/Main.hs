@@ -2,6 +2,7 @@ module Main where
 
 import System.Environment
 import Data.List (unwords)
+import Data.Char (toUpper)
 
 import qualified DatabaseLocal as DB
 import qualified DateLocal
@@ -9,6 +10,9 @@ import qualified DateLocal
 argConcat :: [String] -> String
 argConcat [] = ""
 argConcat x = unwords x
+
+uppercase :: String -> String
+uppercase = map toUpper
 
 add :: [String] -> IO [String]
 add [] = do return ["Add requested but no args provided"]
@@ -36,11 +40,12 @@ delete (x:xs) = do
 procArgs :: [String] -> IO [String]
 procArgs [] = do return ["No args provided"]
 procArgs (x:xs) = do
-  if x == "Add" then
+  let option = uppercase x
+  if option == "ADD" then
     add xs
-  else if x == "List" then
+  else if option == "LIST" then
     list xs
-  else if x == "Delete" then
+  else if option == "DELETE" then
     delete xs
   else
     return ["Invalid command: " ++ x]
