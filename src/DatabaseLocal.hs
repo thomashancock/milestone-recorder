@@ -51,6 +51,8 @@ query args =
     do
     conn <- connectSqlite3 dbFile
 
+    -- let sqlQuery = selectRange
+    -- [toSql (20210101 :: Int), toSql (20210230 :: Int)]
     let sqlQuery = Query.makeSelect args
     stmt <- prepare conn sqlQuery
     execute stmt []
