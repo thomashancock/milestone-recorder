@@ -3,14 +3,28 @@ module SQLQueryMaker (
   getValues
 ) where
 
+import Data.List (intercalate)
+
 -- Constructes the WHERE SQL section based on the arguments 
 makeWhere :: [String] -> String
 makeWhere [] = ""
-makeWhere x
-    | "after" `elem` x && "before" `elem` x = "WHERE (date <= ? AND date >= ?)"
-    | "after" `elem` x = "WHERE date >= ?"
-    | "before" `elem` x = "WHERE date <= ?"
-    | otherwise = ""
+makeWhere [x] = "WHERE " ++ keyToQuery x
+makeWhere x = "WHERE (" ++ joinQueries (keysToQueries x) ++ ")"
+
+-- Joins queries with AND separators
+joinQueries :: [String] -> String
+joinQueries = intercalate " AND "
+
+-- Converts a list of keys to queries
+keysToQueries :: [String] -> [String]
+keysToQueries x = [keyToQuery k | k <- x]
+
+-- Converts a argument key to an SQL query
+keyToQuery :: String -> String
+keyToQuery x
+  | x == "after" = "date >= ?"
+  | x == "before" = "date <= ?"
+  | otherwise = error $ "did not recognise key " ++ x  
 
 -- Extracts the keys from the arguments
 keys :: [a] -> [a]
