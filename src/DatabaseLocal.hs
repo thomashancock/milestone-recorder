@@ -51,11 +51,12 @@ query args =
     do
     conn <- connectSqlite3 dbFile
 
-    -- let sqlQuery = selectRange
-    -- [toSql (20210101 :: Int), toSql (20210230 :: Int)]
     let sqlQuery = Query.makeSelect args
     stmt <- prepare conn sqlQuery
-    execute stmt []
+
+    let values = Query.getValues args
+    let dates = [DateLocal.serialize $ DateLocal.fromStr a | a <- values]
+    execute stmt [toSql x | x <- dates]
     r <- fetchAllRows' stmt
 
     -- Convert each row into a String

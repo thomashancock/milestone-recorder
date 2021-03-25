@@ -1,6 +1,6 @@
 module SQLQueryMaker (
   makeSelect,
-  getArgs
+  getValues
 ) where
 
 -- Constructes the WHERE SQL section based on the arguments 
@@ -36,5 +36,5 @@ makeSelect [] = selectStart ++ " " ++ selectEnd
 makeSelect x = selectStart ++ " " ++ makeWhere (keys x) ++ " " ++ selectEnd
 
 -- Extracts the values from the passed arguments
-getArgs :: [String] -> [String]
-getArgs = values
+getValues :: [String] -> [String]
+getValues = values
