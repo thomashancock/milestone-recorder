@@ -1,5 +1,11 @@
 # Milestone Recorder
 
+## About
+
+The Milestone Recorder app is designed to store and recall events/milestones which occured on a particular day.
+
+It was written as an exercise to learn [Haskell](https://www.haskell.org/) and uses [SQLite](https://www.sqlite.org/index.html) as a backend database.
+
 ## Building the app
 
 The app is build using the [Haskell Tool Stack](https://docs.haskellstack.org/en/stable/README/).
