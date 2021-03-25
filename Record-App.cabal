@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: c8e948dc54f188f6583aa0f566abdeac684a36601bcd51051a267e77f4566138
+-- hash: 0ef1314b0a592a1d3e23f6c05c3263f893755acd1fbdf214fb595e2d3b0c2740
 
 name:           Record-App
 version:        0.1.0.0
@@ -29,7 +29,6 @@ library
   exposed-modules:
       DatabaseLocal
       DateLocal
-      Lib
       SQLQueryMaker
   other-modules:
       Paths_Record_App
