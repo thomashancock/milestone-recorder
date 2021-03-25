@@ -7,7 +7,7 @@ module DateLocal (
 
 import Data.List.Split
 
-data Date = Date (Int, Int, Int) deriving (Eq)
+newtype Date = Date (Int, Int, Int) deriving (Eq)
 
 instance Show Date where
     show (Date (y, m, d)) = year ++ '-':month ++ '-':day
@@ -19,7 +19,7 @@ listToTuple3 :: [a] -> (a,a,a)
 listToTuple3 [x, y, z] = (x, y, z)
 
 fromStr :: String -> Date
-fromStr s = (Date values)
+fromStr s = Date values
     where l = splitOn "-" s
           values = listToTuple3 $ map (read::String->Int) l
 
