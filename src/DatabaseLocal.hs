@@ -5,12 +5,13 @@ module DatabaseLocal (
   delete
 ) where
 
-import Database.HDBC 
+import Database.HDBC
 import Database.HDBC.Sqlite3 (connectSqlite3)
 import Control.Monad (when)
 import Data.Maybe (fromMaybe)
 
 import qualified DateLocal
+import qualified SQLQueryMaker as Query
 
 dbFile = "db/test.db"
 
@@ -46,16 +47,12 @@ insert date entry =
         return False
 
 query :: [String] -> IO [String]
-query _ = 
+query args = 
     do
     conn <- connectSqlite3 dbFile
 
-    -- r <- quickQuery' conn
-        -- "SELECT id, desc from test where id <= ? ORDER BY id, desc"
-        -- [toSql maxId]
-    -- r <- quickQuery' conn "SELECT * FROM test ORDER BY date, desc" []
-
-    stmt <- prepare conn "SELECT * FROM test ORDER BY date, desc"
+    let sqlQuery = Query.makeSelect args
+    stmt <- prepare conn sqlQuery
     execute stmt []
     r <- fetchAllRows' stmt
 
