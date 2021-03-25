@@ -60,7 +60,7 @@ query maxId =
 
     where convRow :: [SqlValue] -> String
           convRow [sqlId, sqlDesc] =
-              show intid ++ ": " ++ desc
-              where intid = fromSql sqlId :: Integer
+              show date ++ ": " ++ desc
+              where date = DateLocal.deserialize (fromSql sqlId :: Int)
                     desc = fromMaybe "NULL" (fromSql sqlDesc)
           convRow x = fail $ "Unexpected result: " ++ show x
