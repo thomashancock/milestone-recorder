@@ -49,7 +49,7 @@ query maxId =
     -- r <- quickQuery' conn
         -- "SELECT id, desc from test where id <= ? ORDER BY id, desc"
         -- [toSql maxId]
-    r <- quickQuery' conn "SELECT * FROM test" []
+    r <- quickQuery' conn "SELECT * FROM test ORDER BY date, desc" []
 
     -- Convert each row into a String
     let stringRows = map convRow r
