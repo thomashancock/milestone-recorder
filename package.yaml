@@ -24,6 +24,7 @@ dependencies:
 - text # added here
 - HDBC >= 2.4.0.3
 - HDBC-sqlite3 >= 2.3.3.1
+- HUnit >= 1.6.1.0
 
 library:
   source-dirs: src

@@ -1,2 +1,5 @@
+
+import qualified TestDateLocal as TDL
+
 main :: IO ()
-main = putStrLn "Test suite not yet implemented"
+main = TDL.runTest
