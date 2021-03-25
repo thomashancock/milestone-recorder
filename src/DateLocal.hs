@@ -6,7 +6,10 @@ module DateLocal (
 
 import Data.List.Split
 
-data Date = Date (Int, Int, Int) deriving (Eq, Show)
+data Date = Date (Int, Int, Int) deriving (Eq)
+
+instance Show Date where
+   show = showDate
 
 listToTuple3 :: [a] -> (a,a,a)
 listToTuple3 [x, y, z] = (x, y, z)
