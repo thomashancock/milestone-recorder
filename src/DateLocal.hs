@@ -6,18 +6,18 @@ module DateLocal (
 
 import Data.List.Split
 
-data Date = LocalDate (Int, Int, Int) deriving (Eq, Show)
+data Date = Date (Int, Int, Int) deriving (Eq, Show)
 
 listToTuple3 :: [a] -> (a,a,a)
 listToTuple3 [x, y, z] = (x, y, z)
 
 parseDate :: String -> Date
-parseDate s = (LocalDate values)
+parseDate s = (Date values)
     where l = splitOn "-" s
           values = listToTuple3 $ map (read::String->Int) l
 
 showDate :: Date -> String
-showDate (LocalDate (y, m, d)) = year ++ '-':month ++ '-':day
+showDate (Date (y, m, d)) = year ++ '-':month ++ '-':day
     where year = show y
           month = show m
           day = show d
