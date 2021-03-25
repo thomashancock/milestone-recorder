@@ -25,7 +25,7 @@ checkAndCreate =
     commit conn
     disconnect conn
 
-insert :: DateLocal.Date -> String -> IO Integer
+insert :: DateLocal.Date -> String -> IO Bool
 insert date entry =
     do
     conn <- connectSqlite3 dbFile
@@ -39,8 +39,11 @@ insert date entry =
     commit conn
     disconnect conn
 
-    -- Return the result of the execute function
-    return result
+    -- Return whether the operation completed succesfully
+    if result == 1 then
+        return True
+    else
+        return False
 
 query :: [String] -> IO [String]
 query _ = 
@@ -67,7 +70,7 @@ query _ =
                     desc = fromMaybe "NULL" (fromSql sqlDesc)
           convRow x = fail $ "Unexpected result: " ++ show x
 
-delete :: Int -> IO Integer
+delete :: Int -> IO Bool
 delete id = 
     do
     conn <- connectSqlite3 dbFile
@@ -78,4 +81,8 @@ delete id =
     commit conn
     disconnect conn
 
-    return result
+    -- Return whether the operation completed succesfully
+    if result == 1 then
+        return True
+    else
+        return False

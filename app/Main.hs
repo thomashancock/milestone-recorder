@@ -14,8 +14,11 @@ add :: [String] -> IO [String]
 add [] = do return ["Add requested but no args provided"]
 add (x:xs) = do
     let restStr = argConcat xs
-    DB.insert (DateLocal.fromStr x) restStr
-    return ["Added " ++ x ++ " " ++ restStr]
+    success <- DB.insert (DateLocal.fromStr x) restStr
+    if success then
+      return ["Added " ++ x ++ " " ++ restStr]
+    else
+      return ["Unable to add " ++ x ++ " " ++ restStr]
 
 list :: [String] -> IO [String]
 list args = DB.query args
@@ -24,8 +27,11 @@ delete :: [String] -> IO [String]
 delete [] = do return ["Delete requested but no id provided"]
 delete (x:xs) = do
     let id = read x :: Int
-    DB.delete id
-    return ["Deleted row with id " ++ show id]
+    success <- DB.delete id
+    if success then
+      return ["Deleted row with id " ++ show id]
+    else
+      return ["Unable to delete row with id " ++ show id]
 
 procArgs :: [String] -> IO [String]
 procArgs [] = do return ["No args provided"]
