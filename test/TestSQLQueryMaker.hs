@@ -32,10 +32,14 @@ test_makeSelect_Before = TestCase (assertEqual "makeSelect Before" selectBefore 
 test_makeSelect_Range :: Test
 test_makeSelect_Range = TestCase (assertEqual "makeSelect Range" selectRange $ makeSelect ["after", "2021-01-01", "before", "2021-03-01"])
 
+test_getArgs :: Test
+test_getArgs = TestCase (assertEqual "makeSelect Range" ["2021-01-01", "2021-03-01"] $ getArgs ["after", "2021-01-01", "before", "2021-03-01"])
+
 tests :: Test
 tests = TestList [
   TestLabel "makeSelect All" test_makeSelect_All,
   TestLabel "makeSelect After" test_makeSelect_After,
   TestLabel "makeSelect Before" test_makeSelect_Before,
-  TestLabel "makeSelect Range" test_makeSelect_Range
+  TestLabel "makeSelect Range" test_makeSelect_Range,
+  TestLabel "getArgs" test_getArgs
   ]
