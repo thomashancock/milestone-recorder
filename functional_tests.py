@@ -52,7 +52,7 @@ def main():
     '2: 2021-2-3 - "February Event"\n'
     ))
 
-  runTest('Delete', 'Delete 1', 'Deleted row with id 1\n')
+  runTest('Delete', 'Delete 1', 'Deleted entry with id 1\n')
 
   runTest('List post-deletion', 'List', expect(
     '2: 2021-2-3 - "February Event"\n'

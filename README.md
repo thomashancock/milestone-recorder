@@ -58,4 +58,4 @@ Functional tests are written in python. To run them, execute: `python3 functiona
 
 ### Known Bugs:
 - `after` and `before` arguments aren't case insensitive.
-- Deleted return message should say `entry` not `row`.
+

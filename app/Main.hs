@@ -33,9 +33,9 @@ delete (x:xs) = do
     let id = read x :: Int
     success <- DB.delete id
     if success then
-      return ["Deleted row with id " ++ show id]
+      return ["Deleted entry with id " ++ show id]
     else
-      return ["Unable to delete row with id " ++ show id]
+      return ["Unable to delete entry with id " ++ show id]
 
 procArgs :: [String] -> IO [String]
 procArgs [] = do return ["No args provided"]
