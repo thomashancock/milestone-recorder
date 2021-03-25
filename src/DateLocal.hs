@@ -1,23 +1,23 @@
 module DateLocal (
-  Date,
-  showDate
+  Date(..),
+  showDate,
+  parseDate
 ) where
 
-type Date=(Int,Int,Int)
-data LocalDate = LocalDate 
-  { year :: Int,
-    month:: Int,
-    day  :: Int
-  }
+import Data.List.Split
 
--- parseDate :: String -> Date
--- parseDate s = (y,m,d)
---     where [(m,rest)] = readDec (filter (not . isSpace) s)
---           [(d,rest1)] = readDec (tail rest)
---           [(y, _)   ] = parseDate' rest1
+data Date = LocalDate (Int, Int, Int) deriving (Eq, Show)
 
-showDate::(Int, Int, Int) -> String
-showDate (y,m,d) = year ++ '-':month ++ '-':day
+listToTuple3 :: [a] -> (a,a,a)
+listToTuple3 [x, y, z] = (x, y, z)
+
+parseDate :: String -> Date
+parseDate s = (LocalDate values)
+    where l = splitOn "-" s
+          values = listToTuple3 $ map (read::String->Int) l
+
+showDate :: Date -> String
+showDate (LocalDate (y, m, d)) = year ++ '-':month ++ '-':day
     where year = show y
           month = show m
           day = show d

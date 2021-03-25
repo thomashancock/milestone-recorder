@@ -6,11 +6,14 @@ import Test.HUnit
 
 import DateLocal
 
-test1 :: Test
-test1 = TestCase (assertEqual "for (show 3)," "3" (show 3))
+test_showDate :: Test
+test_showDate = TestCase (assertEqual "showDate" "2021-3-2" (showDate $ LocalDate (2021, 3, 2)))
 
-test2 :: Test
-test2 = TestCase (assertEqual "str reverse" "cba" $ reverse "abc")
+test_parseDate :: Test
+test_parseDate = TestCase (assertEqual "parseDate" (LocalDate (2021, 3, 2)) (parseDate "2021-3-2"))
 
 tests :: Test
-tests = TestList [TestLabel "test1" test1, TestLabel "test2" test2]
+tests = TestList [
+  TestLabel "showDate" test_showDate,
+  TestLabel "parseDate" test_parseDate
+  ]

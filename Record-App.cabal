@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 39f0e79f9a87701ffd90f4a66c962346b2691788d8ec38afff05623024a6574d
+-- hash: 39abff195431ee2d48ee96ddcba0630a2a570297c567b2ec8068063d2786986f
 
 name:           Record-App
 version:        0.1.0.0
@@ -39,6 +39,7 @@ library
     , HDBC-sqlite3 >=2.3.3.1
     , HUnit >=1.6.1.0
     , base >=4.7 && <5
+    , split
     , text
   default-language: Haskell2010
 
@@ -55,6 +56,7 @@ executable Record-App-exe
     , HUnit >=1.6.1.0
     , Record-App
     , base >=4.7 && <5
+    , split
     , text
   default-language: Haskell2010
 
@@ -73,5 +75,6 @@ test-suite Record-App-test
     , HUnit >=1.6.1.0
     , Record-App
     , base >=4.7 && <5
+    , split
     , text
   default-language: Haskell2010
