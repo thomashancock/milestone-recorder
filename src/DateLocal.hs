@@ -1,7 +1,9 @@
 module DateLocal (
   Date(..),
   showDate,
-  parseDate
+  parseDate,
+  serializeDate,
+  deserializeDate
 ) where
 
 import Data.List.Split
@@ -25,11 +27,11 @@ showDate (Date (y, m, d)) = year ++ '-':month ++ '-':day
           month = show m
           day = show d
 
--- serializeDate::(Int, Int, Int) -> Int
--- serializeDate (y,m,d) = d + (100 * m) + (10000 * y)
+serializeDate :: Date -> Int
+serializeDate (Date (y, m, d)) = d + (100 * m) + (10000 * y)
 
--- deserializeDate::Int -> (Int, Int, Int)
--- deserializeDate x = (y,m,d)
---     where y = x / 10000
---           m = (x / 100) % 100
---           d = x % 100000
+deserializeDate :: Int -> Date
+deserializeDate x = Date (y, m, d)
+    where y = x `div` 10000
+          m = (x `div` 100) `mod` 100
+          d = x `mod` 100
