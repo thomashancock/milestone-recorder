@@ -46,9 +46,10 @@ query maxId =
     do
     conn <- connectSqlite3 dbFile
 
-    r <- quickQuery' conn
-        "SELECT id, desc from test where id <= ? ORDER BY id, desc"
-        [toSql maxId]
+    -- r <- quickQuery' conn
+        -- "SELECT id, desc from test where id <= ? ORDER BY id, desc"
+        -- [toSql maxId]
+    r <- quickQuery' conn "SELECT * FROM test" []
 
     -- Convert each row into a String
     let stringRows = map convRow r
