@@ -14,6 +14,9 @@ test_show = TestCase (assertEqual "show" "2021-3-2" $ show testDate)
 test_fromStr :: Test
 test_fromStr = TestCase (assertEqual "fromStr" testDate $ fromStr "2021-3-2")
 
+test_fromStr_leadingZeros :: Test
+test_fromStr_leadingZeros = TestCase (assertEqual "fromStr leading zeros" testDate $ fromStr "2021-03-02")
+
 test_serialize :: Test
 test_serialize = TestCase (assertEqual "serializeDate" 20210302 $ serialize testDate)
 
@@ -24,6 +27,7 @@ tests :: Test
 tests = TestList [
   TestLabel "show" test_show,
   TestLabel "fromStr" test_fromStr,
+  TestLabel "fromStr with leading zeros" test_fromStr_leadingZeros,
   TestLabel "serialisation" test_serialize,
   TestLabel "deserialisation" test_deserialize
   ]
