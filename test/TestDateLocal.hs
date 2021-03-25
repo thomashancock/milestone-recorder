@@ -8,26 +8,22 @@ import DateLocal
 
 testDate = Date (2021, 3, 2)
 
-test_showDate :: Test
-test_showDate = TestCase (assertEqual "showDate" "2021-3-2" $ showDate testDate)
+test_show :: Test
+test_show = TestCase (assertEqual "show" "2021-3-2" $ show testDate)
 
-test_showImpl :: Test
-test_showImpl = TestCase (assertEqual "show" "2021-3-2" $ show testDate)
+test_fromStr :: Test
+test_fromStr = TestCase (assertEqual "fromStr" testDate $ fromStr "2021-3-2")
 
-test_parseDate :: Test
-test_parseDate = TestCase (assertEqual "parseDate" testDate $  parseDate "2021-3-2")
+test_serialize :: Test
+test_serialize = TestCase (assertEqual "serializeDate" 20210302 $ serialize testDate)
 
-test_serializeDate :: Test
-test_serializeDate = TestCase (assertEqual "serializeDate" 20210302 $ serializeDate testDate)
-
-test_deserializeDate :: Test
-test_deserializeDate = TestCase (assertEqual "deserializeDate" testDate $ deserializeDate 20210302)
+test_deserialize :: Test
+test_deserialize = TestCase (assertEqual "deserializeDate" testDate $ deserialize 20210302)
 
 tests :: Test
 tests = TestList [
-  TestLabel "showDate" test_showDate,
-  TestLabel "show implementation" test_showImpl,
-  TestLabel "parseDate" test_parseDate,
-  TestLabel "serialisation" test_serializeDate,
-  TestLabel "deserialisation" test_deserializeDate
+  TestLabel "show" test_show,
+  TestLabel "fromStr" test_fromStr,
+  TestLabel "serialisation" test_serialize,
+  TestLabel "deserialisation" test_deserialize
   ]
