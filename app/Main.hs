@@ -20,6 +20,13 @@ add (x:xs) = do
 list :: [String] -> IO [String]
 list args = DB.query args
 
+delete :: [String] -> IO [String]
+delete [] = do return ["Delete requested but no id provided"]
+delete (x:xs) = do
+    let id = read x :: Int
+    DB.delete id
+    return ["Deleted row with id " ++ show id]
+
 procArgs :: [String] -> IO [String]
 procArgs [] = do return ["No args provided"]
 procArgs (x:xs) = do
@@ -27,6 +34,8 @@ procArgs (x:xs) = do
     add xs
   else if x == "List" then
     list xs
+  else if x == "Delete" then
+    delete xs
   else
     return ["Invalid command: " ++ x]
 

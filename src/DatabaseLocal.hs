@@ -1,7 +1,8 @@
 module DatabaseLocal (
   checkAndCreate,
   insert,
-  query
+  query,
+  delete
 ) where
 
 import Database.HDBC 
@@ -65,3 +66,16 @@ query _ =
                     date = DateLocal.deserialize (fromSql sqlDate :: Int)
                     desc = fromMaybe "NULL" (fromSql sqlDesc)
           convRow x = fail $ "Unexpected result: " ++ show x
+
+delete :: Int -> IO Integer
+delete id = 
+    do
+    conn <- connectSqlite3 dbFile
+
+    stmt <- prepare conn "DELETE FROM test WHERE _id == ?"
+    result <- execute stmt [toSql id]
+
+    commit conn
+    disconnect conn
+
+    return result
