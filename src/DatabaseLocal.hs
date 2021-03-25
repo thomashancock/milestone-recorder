@@ -18,7 +18,7 @@ checkAndCreate =
     do
     conn <- connectSqlite3 dbFile
 
-    stmt <- prepare conn "CREATE TABLE IF NOT EXISTS test (id INTEGER NOT NULL, desc VARCHAR(80))"
+    stmt <- prepare conn "CREATE TABLE IF NOT EXISTS test (_id INTEGER PRIMARY KEY, date INTEGER NOT NULL, desc VARCHAR(255))"
     r <- execute stmt []
 
     commit conn
@@ -30,10 +30,10 @@ insert date entry =
     conn <- connectSqlite3 dbFile
 
     -- Serialize date as SQLite can't store dates
-    let id = DateLocal.serialize date
+    let sDate = DateLocal.serialize date
 
-    stmt <- prepare conn "INSERT INTO test VALUES (?, ?)"
-    result <- execute stmt [toSql (id :: Int), toSql entry]
+    stmt <- prepare conn "INSERT INTO test (date, desc) VALUES (?, ?)"
+    result <- execute stmt [toSql (sDate :: Int), toSql entry]
 
     commit conn
     disconnect conn
@@ -59,8 +59,9 @@ query maxId =
     return stringRows
 
     where convRow :: [SqlValue] -> String
-          convRow [sqlId, sqlDesc] =
-              show date ++ ": " ++ desc
-              where date = DateLocal.deserialize (fromSql sqlId :: Int)
+          convRow [sqlId, sqlDate, sqlDesc] =
+              show id ++ ": " ++ show date ++ " - " ++ desc
+              where id = fromSql sqlId :: Int
+                    date = DateLocal.deserialize (fromSql sqlDate :: Int)
                     desc = fromMaybe "NULL" (fromSql sqlDesc)
           convRow x = fail $ "Unexpected result: " ++ show x
